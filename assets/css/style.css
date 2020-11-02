@@ -7,7 +7,7 @@ body {
     text-align: center;
 }
 
-.registerContainer{
+.registerContainer {
     background-color: #efefee;
     height: 100vh;
     display: flex;
@@ -23,4 +23,25 @@ body {
     padding: 20px 35px;
     overflow-y: auto;
     box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px;
+}
+
+.registerContainer .column .header {
+    padding: 20px 0px;
+}
+
+.registerContainer .column .header .img {
+    width: 100px;
+}
+
+.registerContainer .column .header .h3 {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    margin: 0;
+    padding-bottom: 0;
+    padding-top: 16px;
+}
+
+.registerContainer .column .header .span {
+    font-size: 14px;
 }
