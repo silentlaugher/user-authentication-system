@@ -1,6 +1,7 @@
 <?php 
     include_once 'includes/partials/headers.php';
     include_once 'includes/partials/nav.php';
+    include_once 'includes/classes/Database.php';
 ?>
 
 <div class="container">
