@@ -18,6 +18,9 @@
         $year = $_POST['year'];
         $birthday = "{$year}-{$month}-{$day}";
 
+        // encrypt the password
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
         try{
             // create SQL insert statement
             $sqlInsert = "INSERT INTO users (first_name, last_name, username, email, password, gender, birthday, join_date)
@@ -27,7 +30,7 @@
             $statement = $db->prepare($sqlInsert);
    
             // add the data into the database
-            $statement->execute(array(':first_name' => $first_name,':last_name' => $last_name,':username' => $username, ':email' => $email, ':password' => $password, ':gender' => $gender, ':birthday' => $birthday));
+            $statement->execute(array(':first_name' => $first_name,':last_name' => $last_name,':username' => $username, ':email' => $email, ':password' => $hashed_password, ':gender' => $gender, ':birthday' => $birthday));
    
             //check if one new row was created
             if($statement->rowCount() == 1){
