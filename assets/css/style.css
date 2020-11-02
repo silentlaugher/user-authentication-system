@@ -1,5 +1,5 @@
 body {
-    padding: 70px;
+    padding: 125px;
 }
 
 .flag {
@@ -43,5 +43,44 @@ body {
 }
 
 .registerContainer .column .header .span {
+    font-size: 14px;
+}
+
+.loginContainer {
+    background-color: #efefee;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginContainer .column {
+    flex-grow: 0;
+    background-color: #fff;
+    width: 450px;
+    min-height: 300px;
+    padding: 20px 35px;
+    overflow-y: auto;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px;
+}
+
+.loginContainer .column .header {
+    padding: 20px 0px;
+}
+
+.loginContainer .column .header .img {
+    width: 100px;
+}
+
+.loginContainer .column .header .h3 {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    margin: 0;
+    padding-bottom: 0;
+    padding-top: 16px;
+}
+
+.loginContainer .column .header .span {
     font-size: 14px;
 }

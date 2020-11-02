@@ -15,26 +15,26 @@
             <form action="register.php" method="POST">
             <div class="name">
 				<h5>Name</h5>
-				<input type="text" name="first_name" class="form-control" placeholder="First Name" value=""/>
-				<input type="text" name="last_name" class="form-control" placeholder="Last Name" value=""/>																	
+                <input type="text" name="first_name"  class="form-control" placeholder="First Name" value="" required>
+				<input type="text" name="last_name" class="form-control" placeholder="Last Name" value="" required>																	
   		  		 </div>
-
+                <br>
 				<div>
 				<h5>Username</h5>
-				<input type="text" name="username" class="form-control" placeholder="Username" value=""/>
+				<input type="text" name="username" class="form-control" placeholder="Username" value="" required>
 				</div>
-
+                <br>
 				<div>
 				<h5>Email</h5>
-				<input type="email" name="email" class="form-control" placeholder="Email" value=""/>
+				<input type="email" name="email" class="form-control" placeholder="Email" value="" required>
 				</div>
-
+                <br>
 				<div>
 				<h5>Password</h5>
-				<input type="password" name="password" class="form-control" placeholder="Password"/>
-				<input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" />
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+				<input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
 				</div>
-				
+				<br>
 				<div>
 				<fieldset>
 					<legend>Gender</legend>
@@ -52,7 +52,7 @@
 						I'd rather not say
 					</label> 
 				</fieldset>
-
+                <hr>
 				<fieldset class="date">
 				  <legend>Date of Birth</legend>
 				  <label for="month">Month</label>
@@ -146,9 +146,9 @@
 				  <span class="inst">(Month-Day-Year)</span>
 				</fieldset>
                 </div>
-                
+                <hr>
 				<div class="btn-div">
-                    <button type="submit" name="backBtn" class="btn btn-danger float-left"><a href="index.php">Back</a></button>
+                    <input type="button" class="btn btn-danger float-left" onclick="window.location.href='index.php';" value="Back" /> 
                     <button type="submit" name="registerBtn" class="btn btn-primary float-right">Register</button>
  				</div>
             </form>
