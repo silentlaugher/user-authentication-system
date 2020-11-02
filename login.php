@@ -7,12 +7,13 @@
 <div class="loginContainer">
 
   <div class="flag">
-    <h1>Edynak User Authentication System</h1>
+    
   </div>
   <br>
     <div class="column">
         <div class="header">
-            <h3>Login</h3>
+            <h1>Sign in Form</h1>
+            <h4>Login</h4>
             <span>to continue to site</span>
 
         </div>

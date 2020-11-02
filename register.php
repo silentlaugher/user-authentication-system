@@ -3,15 +3,52 @@
     include_once 'includes/partials/headers.php';
     include_once 'includes/partials/nav.php';
     include_once 'includes/classes/Database.php';
+
+    if(isset($_POST['username'])) {
+        // collect form data and store in variables
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $rePassword = $_POST['confirm_password'];
+        $gender = $_POST['gender'];
+        $month = $_POST['month'];
+        $day = $_POST['day'];
+        $year = $_POST['year'];
+        $birthday = "{$year}-{$month}-{$day}";
+
+        try{
+            // create SQL insert statement
+            $sqlInsert = "INSERT INTO users (first_name, last_name, username, email, password, gender, birthday, join_date)
+                      VALUES (:first_name, :last_name, :username, :email, :password, :gender, :birthday, now())";
+   
+            // use PDO prepared to sanitize data
+            $statement = $db->prepare($sqlInsert);
+   
+            // add the data into the database
+            $statement->execute(array(':first_name' => $first_name,':last_name' => $last_name,':username' => $username, ':email' => $email, ':password' => $password, ':gender' => $gender, ':birthday' => $birthday));
+   
+            //check if one new row was created
+            if($statement->rowCount() == 1){
+                $result = "<p style='padding:20px; border: 1px solid gray; color: green;'> Registration Successful</p>";
+            }
+        }catch (PDOException $ex){
+            $result = "<p style='padding:20px; border: 1px solid gray; color: red;'> An error occurred: ".$ex->getMessage()."</p>";
+        }
+    }
 ?>
 <div class="registerContainer">
     <div class="column">
         <div class="header">
          <!--site logo goes here -->
-        <h3>Sign Up</h3>
+         <h1>Registration Form</h1>
+         <?php if(isset($result)) echo $result; ?>
+        <h4>Sign Up</h4>
         <span>to continue to site</span>        
         </div>
         <div class="registerForm">
+        
             <form action="register.php" method="POST">
             <div class="name">
 				<h5>Name</h5>
@@ -109,48 +146,105 @@
 				    <option>31</option>      
 				  </select> -
 				  <label for="year_start">Year</label>
-				  <select id="year_start"
-				         name="year" />
- 				    <option  value="" selected>Year</option>    
-				    <option>1980</option>      
-				    <option>1981</option>      
-				    <option>1982</option>      
-				    <option>1983</option>      
-				    <option>1984</option>      
-				    <option>1985</option>      
-				    <option>1986</option>      
-				    <option>1987</option>      
-				    <option>1988</option>      
-				    <option>1989</option>     
-				    <option>1990</option>      
-				    <option>1991</option>      
-				    <option>1992</option>      
-				    <option>1993</option>      
-				    <option>1994</option>      
-				    <option>1995</option>      
-				    <option>1996</option>      
-				    <option>1997</option>      
-				    <option>1998</option>      
-				    <option>1999</option>
-				    <option>2000</option>      
-				    <option>2001</option>      
-				    <option>2002</option>      
-				    <option>2003</option>      
-				    <option>2004</option>      
-				    <option>2005</option>      
-				    <option>2006</option>      
-				    <option>2007</option>      
-				    <option>2008</option>      
-				    <option>2009</option>      
-				  </select>
-				  <span class="inst">(Month-Day-Year)</span>
-				</fieldset>
+                   <select id="year_start" name="year" />
+                     <option  value="" selected>Year</option>
+                     <option>1915</option>
+                     <option>1916</option>
+                     <option>1917</option>
+                     <option>1918</option>
+                     <option>1919</option>
+                     <option>1920</option>
+                     <option>1921</option>
+                     <option>1922</option>
+                     <option>1923</option>
+                     <option>1924</option>
+                     <option>1925</option>
+                     <option>1926</option>
+                     <option>1927</option>
+                     <option>1928</option>
+                     <option>1929</option>
+                     <option>1930</option>
+                     <option>1931</option>
+                     <option>1932</option>
+                     <option>1933</option>
+                     <option>1934</option>
+                     <option>1935</option>
+                     <option>1936</option>
+                     <option>1937</option>
+                     <option>1938</option>
+                     <option>1939</option>
+                     <option>1940</option>
+                     <option>1941</option>
+                     <option>1942</option>
+                     <option>1943</option>
+                     <option>1944</option>
+                     <option>1945</option>
+                     <option>1946</option>
+                     <option>1947</option>
+                     <option>1948</option>
+                     <option>1949</option>
+                     <option>1950</option>
+                     <option>1951</option>
+                     <option>1952</option>
+                     <option>1953</option>
+                     <option>1954</option>
+                     <option>1955</option>
+                     <option>1956</option>
+                     <option>1957</option>
+                     <option>1958</option>
+                     <option>1959</option>
+                     <option>1960</option>
+                     <option>1961</option>
+                     <option>1962</option>
+                     <option>1963</option>
+                     <option>1964</option>
+                     <option>1965</option>
+                     <option>1966</option>
+                     <option>1967</option>
+                     <option>1968</option>
+                     <option>1969</option>
+                     <option>1970</option>
+                     <option>1971</option>
+                     <option>1972</option>
+                     <option>1973</option>
+                     <option>1974</option>
+                     <option>1975</option>
+                     <option>1976</option>
+                     <option>1977</option>
+                     <option>1978</option>
+                     <option>1979</option>
+                     <option>1980</option>
+                     <option>1981</option>
+                     <option>1982</option>
+                     <option>1983</option>
+                     <option>1984</option>
+                     <option>1985</option>
+                     <option>1986</option>
+                     <option>1987</option>
+                     <option>1988</option>
+                     <option>1989</option>
+                     <option>1990</option>
+                     <option>1991</option>
+                     <option>1992</option>
+                     <option>1993</option>
+                     <option>1994</option>
+                     <option>1995</option>
+                     <option>1996</option>
+                     <option>1997</option>
+                     <option>1998</option>
+                     <option>1999</option>
+                     <option>2000</option>
+                     <option>2001</option>
+                     <option>2002</option>
+                   </select>
+                   <span class="inst">(Month-Day-Year)</span>
+                 </fieldset>
                 </div>
                 <hr>
-				<div class="btn-div">
-                    <input type="button" class="btn btn-danger float-left" onclick="window.location.href='index.php';" value="Back" /> 
-                    <button type="submit" name="registerBtn" class="btn btn-primary float-right">Register</button>
- 				</div>
+            <div class="btn-div">
+                <input type="submit" class="btn btn-danger float-left" onclick="window.location.href='index.php';" value="Back" /> 
+                <input type="submit"  class="btn btn-primary float-right" value="Register">
+ 			</div>
             </form>
             <br><br>
         </div>
