@@ -7,7 +7,9 @@
 <div class="registerContainer">
     <div class="column">
         <div class="header">
-        
+         <!--site logo goes here -->
+        <h3>Sign Up</h3>
+        <span>to continue to site</span>        
         </div>
         <div class="registerForm">
         
