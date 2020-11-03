@@ -19,9 +19,9 @@
         </div>
         <div class="loginForm">
             <form action="login.php">
-                <input type="text" name="email" class="form-control" placeholder="Email" required>
+                <input type="text" name="email" class="form-control" placeholder="Email">
                 <br>
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <input type="password" name="password" class="form-control" placeholder="Password">
                 <br>
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">

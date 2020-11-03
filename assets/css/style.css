@@ -1,5 +1,5 @@
 body {
-    padding-top: 125px;
+    padding-top: 305px;
 }
 
 .flag {
@@ -44,6 +44,14 @@ body {
 
 .registerContainer .column .header .span {
     font-size: 14px;
+}
+
+.registerContainer .column .registerForm {
+    display: flex; /* 2. display flex to the rescue */
+    flex-direction: row;
+}
+.registerContainer .column .registerForm .name {
+    display: block;
 }
 
 .loginContainer {

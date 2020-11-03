@@ -1,10 +1,27 @@
 <?php
+    // page title
     $page_title = "Edynak User Authentication System - Register Page -";
+    // include partials
     include_once 'includes/partials/headers.php';
     include_once 'includes/partials/nav.php';
+    // db connection script
     include_once 'includes/classes/Database.php';
+    // process the form
+    if(isset($_POST['registerBtn'])) {
+        // initialize an array to store any error message from the form
+        $form_errors = array();
 
-    if(isset($_POST['username'])) {
+        // form validation
+        $required_fields = array('first_name', 'last_name', 'username', 'email', 'password', 'confirm_password', 'gender', 'month', 'day', 'year');
+
+        //loop through the required fields array snd popular the form error array
+        foreach($required_fields as $name_of_field){
+            if(!isset($_POST[$name_of_field]) || $_POST[$name_of_field] == NULL){
+                $form_errors[] = $name_of_field . " is a required field";
+            }
+        }
+     //check if error array is empty, if yes process the form data and insert record
+     if(empty($form_errors)){
         // collect form data and store in variables
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
@@ -34,12 +51,37 @@
    
             //check if one new row was created
             if($statement->rowCount() == 1){
-                $result = "<p style='padding:20px; border: 1px solid gray; color: green;'> Registration Successful</p>";
+                $result = "<p style='padding:20px; color: green;'> Registration Successful</p>";
             }
         }catch (PDOException $ex){
-            $result = "<p style='padding:20px; border: 1px solid gray; color: red;'> An error occurred: ".$ex->getMessage()."</p>";
+            $result = "<p style='padding:20px; color: red;'> An error occurred: ".$ex->getMessage()."</p>";
         }
     }
+    else{
+        if(count($form_errors) == 1){
+            $result = "<p style='color: red;'> There was 1 error in the form<br>";
+
+            $result .= "<ul style='color: red;'>";
+            //loop through error array and display all items
+            foreach($form_errors as $error){
+                $result .= "<li> {$error} </li>";
+            }
+            $result .= "</ul></p>";
+
+        }else{
+            $result = "<p style='color: red;'> There were " .count($form_errors). " errors in the form <br>";
+
+            $result .= "<ul style='color: red;'>";
+            //loop through error array and display all items
+            foreach($form_errors as $error){
+                $result .= "<li> {$error}</li>";
+            }
+            $result .= "</ul></p>";
+        }
+    }
+
+}
+
 ?>
 <div class="registerContainer">
     <div class="column">
@@ -55,26 +97,25 @@
             <form action="register.php" method="POST">
             <div class="name">
 				<h5>Name</h5>
-                <input type="text" name="first_name"  class="form-control" placeholder="First Name" value="" required>
-				<input type="text" name="last_name" class="form-control" placeholder="Last Name" value="" required>																	
+                <input type="text" name="first_name" class="form-group" placeholder="First Name" value="">
+				<input type="text" name="last_name" class="form-group" placeholder="Last Name" value="">																	
   		  		 </div>
-                <br>
 				<div>
 				<h5>Username</h5>
-				<input type="text" name="username" class="form-control" placeholder="Username" value="" required>
-				</div>
+				<input type="text" name="username" class="form-control" placeholder="Username" value="">
+				</div> 
                 <br>
 				<div>
 				<h5>Email</h5>
-				<input type="email" name="email" class="form-control" placeholder="Email" value="" required>
+				<input type="email" name="email" class="form-control" placeholder="Email" value="">
 				</div>
                 <br>
 				<div>
 				<h5>Password</h5>
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
-				<input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+                <input type="password" name="password" class="form-group" placeholder="Password">
+				<input type="password" name="confirm_password" class="form-group" placeholder="Confirm Password">
 				</div>
-				<br>
+				
 				<div>
 				<fieldset>
 					<legend>Gender</legend>
@@ -246,7 +287,7 @@
                 <hr>
             <div class="btn-div">
                 <input type="submit" class="btn btn-danger float-left" onclick="window.location.href='index.php';" value="Back" /> 
-                <input type="submit"  class="btn btn-primary float-right" value="Register">
+                <input type="submit"  class="btn btn-primary float-right" name="registerBtn" value="Register">
  			</div>
             </form>
             <br><br>
