@@ -4,37 +4,64 @@
     // include partials
     include_once 'includes/partials/headers.php';
     include_once 'includes/partials/nav.php';
+    //validation
+    include_once 'includes/core/utilities.php';
     // db connection script
     include_once 'includes/classes/Database.php';
     // process the form
     if(isset($_POST['registerBtn'])) {
-        // initialize an array to store any error message from the form
-        $form_errors = array();
+    // initialize an array to store any error message from the form
+    $form_errors = array();
 
-        // form validation
-        $required_fields = array('first_name', 'last_name', 'username', 'email', 'password', 'confirm_password', 'gender', 'month', 'day', 'year');
+    // form validation
+    $required_fields = array('first_name', 'last_name', 'username', 'email', 'password', 'confirm_password', 'gender', 'month', 'day', 'year');
 
-        //loop through the required fields array snd popular the form error array
-        foreach($required_fields as $name_of_field){
-            if(!isset($_POST[$name_of_field]) || $_POST[$name_of_field] == NULL){
-                $form_errors[] = $name_of_field . " is a required field";
-            }
-        }
-     //check if error array is empty, if yes process the form data and insert record
-     if(empty($form_errors)){
-        // collect form data and store in variables
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $rePassword = $_POST['confirm_password'];
-        $gender = $_POST['gender'];
-        $month = $_POST['month'];
-        $day = $_POST['day'];
-        $year = $_POST['year'];
-        $birthday = "{$year}-{$month}-{$day}";
+    //call the function to check empty field and merge the return data into form_error array
+    $form_errors = array_merge($form_errors, check_empty_fields($required_fields));
 
+    //Fields that requires checking for minimum length
+    $fields_to_check_length = array('first_name' => 2, 'last_name' => 2, 'username' => 2, 'password' => 8, 'confirm_password' =>8);
+
+    //Fields that requires checking for maximum length
+    $fields_to_check_max_length = array('first_name' =>15 , 'last_name' =>15 , 'username' => 20, 'password' => 25, 'confirm_password' => 25);
+
+    //call the function to check minimum required length and merge the return data into form_error array
+    $form_errors = array_merge($form_errors, check_min_length($fields_to_check_length));
+
+    //call the function to check maximum required length and merge the return data into form_error array
+    $form_errors = array_merge($form_errors, check_max_length($fields_to_check_max_length));
+ 
+    //email validation / merge the return data into form_error array
+    $form_errors = array_merge($form_errors, check_email($_POST));
+
+    //password validation / merge the return data into form_error array
+    $form_errors = array_merge($form_errors, check_passwords());
+
+    // collect form data and store in variables
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $rePassword = $_POST['confirm_password'];
+    $gender = $_POST['gender'];
+    $month = $_POST['month'];
+    $day = $_POST['day'];
+    $year = $_POST['year'];
+    $birthday = "{$year}-{$month}-{$day}";
+
+    if(checkDuplicates("users", "username", $username, $db)){
+        $result = "<p>That username is already taken. Please try a different one</p>";
+    }
+
+    else if(checkDuplicates("users", "email", $email, $db)){
+        $result = "<p>Error, that email has already been registered. Use a different one</p>";
+    }
+
+    //check if error array is empty, if yes process the form data and insert record
+    else if(empty($form_errors)){
+
+        
         // encrypt the password
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
@@ -60,23 +87,8 @@
     else{
         if(count($form_errors) == 1){
             $result = "<p style='color: red;'> There was 1 error in the form<br>";
-
-            $result .= "<ul style='color: red;'>";
-            //loop through error array and display all items
-            foreach($form_errors as $error){
-                $result .= "<li> {$error} </li>";
-            }
-            $result .= "</ul></p>";
-
         }else{
             $result = "<p style='color: red;'> There were " .count($form_errors). " errors in the form <br>";
-
-            $result .= "<ul style='color: red;'>";
-            //loop through error array and display all items
-            foreach($form_errors as $error){
-                $result .= "<li> {$error}</li>";
-            }
-            $result .= "</ul></p>";
         }
     }
 
@@ -88,9 +100,12 @@
         <div class="header">
          <!--site logo goes here -->
          <h1>Registration Form</h1>
-         <?php if(isset($result)) echo $result; ?>
         <h4>Sign Up</h4>
-        <span>to continue to site</span>        
+        <span>to continue to site</span>
+        <?php 
+            if(isset($result)) echo $result;
+            if(!empty($form_errors)) echo show_errors($form_errors); 
+        ?>       
         </div>
         <div class="registerForm">
         
@@ -286,9 +301,9 @@
                 </div>
                 <hr>
             <div class="btn-div">
-                <input type="submit" class="btn btn-danger float-left" onclick="window.location.href='index.php';" value="Back" /> 
+                <p><a href="index.php">Back</a></p> 
                 <input type="submit"  class="btn btn-primary float-right" name="registerBtn" value="Register">
- 			</div>
+             </div>
             </form>
             <br><br>
         </div>
