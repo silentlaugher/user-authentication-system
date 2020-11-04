@@ -128,4 +128,21 @@ function show_errors($form_errors_array){
     $errors .= "</ul></p>";
     return $errors;
 }
-?>
+
+/**
+ * flashMessage function
+ */
+function flashMessage($message, $passOrFail = "Fail"){
+    if($passOrFail === "Pass"){
+        $data = "<p style='padding:20px; border: 1px solid gray; color: green;'>{$message}</p>";
+    }else{
+        $data = "<p style='padding:20px; border: 1px solid gray; color: red;'>{$message}</p>";
+    }
+    return $data;
+}
+/**
+ * redirect function
+ **/ 
+function redirectTo($page){
+    header("Location: {$page}.php");
+}

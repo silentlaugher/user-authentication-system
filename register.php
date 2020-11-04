@@ -51,11 +51,11 @@
     $birthday = "{$year}-{$month}-{$day}";
 
     if(checkDuplicates("users", "username", $username, $db)){
-        $result = "<p style='padding:20px; border: 1px solid grey; color: red;'>That username is already taken. Please try a different one</p>";
+        $result = flashMessage("That username is already taken. Please try a different one");
     }
 
     else if(checkDuplicates("users", "email", $email, $db)){
-        $result = "<p style='padding:20px; border: 1px solid grey; color: red;'>Error, that email has already been registered. Use a different one</p>";
+        $result = flashMessage("Error, that email has already been registered. Use a different one");
     }
 
     //check if error array is empty, if yes process the form data and insert record
@@ -78,17 +78,17 @@
    
             //check if one new row was created
             if($statement->rowCount() == 1){
-                $result = "<p style='padding:20px; border: 1px solid grey; color: green;'> Registration Successful</p>";
+                $result =  flashMessage("Registration Successful", "Pass");
             }
         }catch (PDOException $ex){
-            $result = "<p style='padding:20px; border: 1px solid grey; color: red;'> An error occurred: ".$ex->getMessage()."</p>";
+            $result = flashMessage("An error occurred: " .$ex->getMessage());
         }
     }
     else{
         if(count($form_errors) == 1){
-            $result = "<p style='color: red;'> There was 1 error in the form<br>";
+            $result = flashMessage("There was 1 error in the form<br>");
         }else{
-            $result = "<p style='color: red;'> There were " .count($form_errors). " errors in the form <br>";
+            $result = flashMessage("There were " .count($form_errors). " errors in the form<br>");
         }
     }
 

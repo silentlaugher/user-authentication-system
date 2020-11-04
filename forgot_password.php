@@ -1,4 +1,5 @@
 <?php
+$page_title = "Edynak User Authentication System - Forgot Password Page -";
 include_once 'includes/partials/headers.php';
 include_once 'includes/partials/nav.php';
 //add our database connection script

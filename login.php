@@ -37,19 +37,19 @@
                    $_SESSION['user_id'] = $id;
                    $_SESSION['email'] = $email;
                    $_SESSION['username'] = $username;
-                   header("location: index.php");
+                   redirectTo('index');
                }else{
-                   $result = "<p style='padding: 20px; color: red; border: 1px solid gray;'> Your credentials are incorrect. Invalid email or password</p>";
+                   $result = flashMessage("Your credentials are incorrect. Invalid email or password");
                }
            }else{
-             $result = "<p style='padding: 20px; color: red; border: 1px solid gray;'> Your credentials are incorrect. Invalid email or password</p>";
+             $result = flashMessage("Your credentials are incorrect. Invalid email or password");
            }
     
         }else{
             if(count($form_errors) == 1){
-                $result = "<p style='color: red;'>There was one error in the form </p>";
+                $result = flashMessage("There was one error in the form");
             }else{
-                $result = "<p style='color: red;'>There were " .count($form_errors). " error in the form </p>";
+                $result = flashMessage("There were " .count($form_errors). " error in the form");
             }
         }
     }
@@ -62,14 +62,14 @@
   </div>
   <br>
     <div class="column">
-    <?php 
-        if(isset($result)) echo $result;
-        if(!empty($form_errors)) echo show_errors($form_errors); 
-    ?>
         <div class="header">
             <h1>Sign in Form</h1>
             <h4>Login</h4>
             <span>to continue to site</span>
+            <?php 
+                if(isset($result)) echo $result;
+                if(!empty($form_errors)) echo show_errors($form_errors); 
+            ?>
         </div>
         <div class="loginForm">
             <form action="login.php" method="POST">

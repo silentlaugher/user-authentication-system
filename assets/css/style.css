@@ -136,3 +136,4 @@ body {
 .forgotPwContainer .column .registerForm {
     display: flex; /* 2. display flex to the rescue */
     flex-direction: row;
+}
