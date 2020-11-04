@@ -2,6 +2,57 @@
     $page_title = "Edynak User Authentication System - Login Page -";
     include_once 'includes/partials/headers.php';
     include_once 'includes/partials/nav.php';
+
+    include_once 'includes/core/session.php';
+    include_once 'includes/classes/Database.php';
+    include_once 'includes/core/utilities.php';
+
+
+    if(isset($_POST['loginBtn'])){
+        // array to hold errors
+        $form_errors = array();
+    
+        // validate
+        $required_fields = array('email', 'password');
+        $form_errors = array_merge($form_errors, check_empty_fields($required_fields));
+    
+        if(empty($form_errors)){
+    
+            // collect form data
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+    
+            // check if user exist in the database
+            $sqlQuery = "SELECT * FROM users WHERE email = :email";
+            $statement = $db->prepare($sqlQuery);
+            $statement->execute(array(':email' => $email));
+    
+           if($row = $statement->fetch()){
+               $id = $row['user_id'];
+               $hashed_password = $row['password'];
+               $email = $row['email'];
+               $username = $row['username'];
+    
+               if(password_verify($password, $hashed_password)){
+                   $_SESSION['user_id'] = $id;
+                   $_SESSION['email'] = $email;
+                   $_SESSION['username'] = $username;
+                   header("location: index.php");
+               }else{
+                   $result = "<p style='padding: 20px; color: red; border: 1px solid gray;'> Your credentials are incorrect. Invalid email or password</p>";
+               }
+           }else{
+             $result = "<p style='padding: 20px; color: red; border: 1px solid gray;'> Your credentials are incorrect. Invalid email or password</p>";
+           }
+    
+        }else{
+            if(count($form_errors) == 1){
+                $result = "<p style='color: red;'>There was one error in the form </p>";
+            }else{
+                $result = "<p style='color: red;'>There were " .count($form_errors). " error in the form </p>";
+            }
+        }
+    }
 ?>
 
 <div class="loginContainer">
@@ -11,14 +62,17 @@
   </div>
   <br>
     <div class="column">
+    <?php 
+        if(isset($result)) echo $result;
+        if(!empty($form_errors)) echo show_errors($form_errors); 
+    ?>
         <div class="header">
             <h1>Sign in Form</h1>
             <h4>Login</h4>
             <span>to continue to site</span>
-
         </div>
         <div class="loginForm">
-            <form action="login.php">
+            <form action="login.php" method="POST">
                 <input type="text" name="email" class="form-control" placeholder="Email">
                 <br>
                 <input type="password" name="password" class="form-control" placeholder="Password">
@@ -29,10 +83,10 @@
                     <p class="forgotPasswordMessage">Forgot password?<a href="forgot_password.php"> Click here</a></p>
                 </div>
 				<div class="btn-div">
-                    <input type="button" class="btn btn-danger float-left" onclick="window.location.href='index.php';" value="Back" /> 
-                    <input type="button" class="btn btn-primary float-right" onclick="window.location.href='login.php';" value="Login" /> 
+                    <input type="submit" class="btn btn-primary float-right" name="loginBtn" value="Login" /> 
                  </div>
             </form>
+            <input type="submit" class="btn btn-danger float-left" onclick="window.location.href='index.php';" value="Back" /> 
             <br><br>
             <p class="registerMessage float-left">Not yet a member?<a href="register.php"> Register here</a></p>
         </div>
@@ -40,5 +94,5 @@
 </div><!-- /.container -->
 
 <?php 
-    include_once 'includes/partials/footers.php'
+    include_once 'includes/partials/footers.php';
 ?>

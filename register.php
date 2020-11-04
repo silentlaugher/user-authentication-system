@@ -51,11 +51,11 @@
     $birthday = "{$year}-{$month}-{$day}";
 
     if(checkDuplicates("users", "username", $username, $db)){
-        $result = "<p>That username is already taken. Please try a different one</p>";
+        $result = "<p style='padding:20px; border: 1px solid grey; color: red;'>That username is already taken. Please try a different one</p>";
     }
 
     else if(checkDuplicates("users", "email", $email, $db)){
-        $result = "<p>Error, that email has already been registered. Use a different one</p>";
+        $result = "<p style='padding:20px; border: 1px solid grey; color: red;'>Error, that email has already been registered. Use a different one</p>";
     }
 
     //check if error array is empty, if yes process the form data and insert record
@@ -78,10 +78,10 @@
    
             //check if one new row was created
             if($statement->rowCount() == 1){
-                $result = "<p style='padding:20px; color: green;'> Registration Successful</p>";
+                $result = "<p style='padding:20px; border: 1px solid grey; color: green;'> Registration Successful</p>";
             }
         }catch (PDOException $ex){
-            $result = "<p style='padding:20px; color: red;'> An error occurred: ".$ex->getMessage()."</p>";
+            $result = "<p style='padding:20px; border: 1px solid grey; color: red;'> An error occurred: ".$ex->getMessage()."</p>";
         }
     }
     else{
