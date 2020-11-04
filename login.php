@@ -49,7 +49,7 @@
             if(count($form_errors) == 1){
                 $result = flashMessage("There was one error in the form");
             }else{
-                $result = flashMessage("There were " .count($form_errors). " error in the form");
+                $result = flashMessage("There were " .count($form_errors). " errors in the form");
             }
         }
     }
