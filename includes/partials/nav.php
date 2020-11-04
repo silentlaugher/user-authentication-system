@@ -6,10 +6,10 @@
             
   <div class="collapse navbar-collapse" id="navbar">
     <ul class="nav navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="index.php">Home <span class="active"></span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php">Home</a>
       </li>
-      <?php if(!isset($_SESSION['username'])): ?>
+      <?php if(isset($_SESSION['username'])): ?>
       <li class="nav-item">
         <a class="nav-link" href="#About">My Profile</a>
       </li>
@@ -24,7 +24,7 @@
         <a class="nav-link" href="login.php">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="register.php">Sign Up</a>
+        <a class="nav-link" href="register.php">SignUp</a>
       </li>    
       <li class="nav-item">
         <a class="nav-link" href="#Contact">Contact</a>
