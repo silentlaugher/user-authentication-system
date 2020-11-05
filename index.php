@@ -6,7 +6,6 @@
 ?>
 
 <div class="container">
-
   <div class="flag">
     <h1>Edynak User Authentication System</h1>
     <?php if(!isset($_SESSION['username'])): ?>
