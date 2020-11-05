@@ -34,6 +34,10 @@
                    $_SESSION['user_id'] = $id;
                    $_SESSION['email'] = $email;
                    $_SESSION['username'] = $username;
+                   // get ip address
+                   $fingerprint = md5($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']);
+                   $_SESSION['last_active'] = time();
+                   $_SESSION['fingerprint'] = $fingerprint;
 
                    if($remember === "yes") {
                        rememberMe($id);

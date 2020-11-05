@@ -5,7 +5,7 @@
 </button>
             
   <div class="collapse navbar-collapse" id="navbar">
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav"><i class="hide"><?php echo guard(); ?></i>
       <li class="nav-item">
         <a class="nav-link" href="index.php">Home</a>
       </li>

@@ -13,6 +13,14 @@
     <?php else: ?>
     <p class="lead">You are currently signed in as <?php if(isset($_SESSION['username'])) echo $_SESSION['username']; ?> <a href="logout.php">Sign out</a></p>
     <?php endif ?>
+<!--get ip address and other info -->
+    <?php 
+      $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'];
+      echo "<br>".time();
+       ($_SESSION['last_active'])){
+         echo $_SESSION['last_active'];
+       }; 
+    ?>
   </div>
 
 </div><!-- /.container -->
