@@ -146,3 +146,76 @@ function flashMessage($message, $passOrFail = "Fail"){
 function redirectTo($page){
     header("Location: {$page}.php");
 }
+
+/**
+ * @param $user_id
+ */
+function rememberMe($user_id){
+    $encryptCookieData = base64_encode("UaQteh5i4y3dntstemYODEC{$user_id}");
+    // Cookie set to expire in about 30 days
+    setcookie("rememberUserCookie", $encryptCookieData, time()+60*60*24*100, "/");
+}
+
+/**
+ * checked if the cookie used is same with the encrypted cookie
+ * @param $db, database connection link
+ * @return bool, true if the user cookie is valid
+ */
+function isCookieValid($db){
+    $isValid = false;
+    if (isset($_COOKIE['rememberUserCookie'])) {
+
+        /**
+         * Decode cookies and extract user ID
+         */
+        $decryptCookieData = base64_decode($_COOKIE['rememberUserCookie']);
+        $user_id = explode("UaQteh5i4y3dntstemYODEC", $decryptCookieData);
+        $userID = $user_id[1];
+
+        /**
+         * check if id retrieved from the cookie exist in the database
+         * */
+        $sqlQuery = "SELECT * FROM users WHERE user_id = :user_id";
+        $statement = $db->prepare($sqlQuery);
+        $statement->execute(array(':user_id' => $userID));
+
+        if($row = $statement->fetch()){
+            $id = $row['user_id'];
+            $email = $row['email'];
+            $username = $row['username'];
+
+            /**
+             * Create the user session variable
+             */
+            $_SESSION['user_id'] = $id;
+            $_SESSION['email'] = $email;
+            $_SESSION['username'] = $username;
+            $isValid = true;
+        }else{
+            /**
+             * cookie ID is invalid destroy session and logout user
+             */
+            $isValid = false;
+            signout();
+        }
+    }
+    return $isValid;
+}
+
+/**
+ * kill all sessions, cookies and regenrate session ID
+ * Redirect to index page after all
+ */
+function signout(){
+    unset($_SESSION['email']);
+    unset($_SESSION['username']);
+    unset($_SESSION['user_id']);
+// extra security
+   if(isset($_COOKIE['rememberUserCookie'])){
+        unset($_COOKIE['rememberUserCookie']);
+        setcookie('rememberUserCookie', null, -1, '/');
+    }
+    session_destroy();
+    session_regenerate_id(true);
+    redirectTo('index');
+}

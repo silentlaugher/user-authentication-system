@@ -28,7 +28,7 @@
                 <input type="password" name="password" class="form-control" placeholder="Password">
                 <br>
                 <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <input type="checkbox" class="form-check-input" name="remember" value="yes">
                     <label class="form-check-label" for="remember">Remember me</label>
                     <p class="forgotPasswordMessage">Forgot password?<a href="forgot_password.php"> Click here</a></p>
                 </div>

@@ -1,3 +1,8 @@
+<?php
+   include_once 'includes/core/session.php';
+   include_once 'includes/classes/Database.php';
+   include_once 'includes/core/utilities.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

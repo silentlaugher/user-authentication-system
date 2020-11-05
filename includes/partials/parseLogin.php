@@ -15,6 +15,9 @@
             // collect form data
             $email = $_POST['email'];
             $password = $_POST['password'];
+
+            isset($_POST['remember']) ? $remember = $_POST['remember'] : $remember = "";
+
     
             // check if user exist in the database
             $sqlQuery = "SELECT * FROM users WHERE email = :email";
@@ -32,6 +35,9 @@
                    $_SESSION['email'] = $email;
                    $_SESSION['username'] = $username;
 
+                   if($remember === "yes") {
+                       rememberMe($id);
+                   }
                    // call sweet alert
                    echo $welcome = "<script type=\"text/javascript\">
                     swal({ title: \"Welcome back $username!\", 

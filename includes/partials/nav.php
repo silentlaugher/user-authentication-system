@@ -9,7 +9,7 @@
       <li class="nav-item">
         <a class="nav-link" href="index.php">Home</a>
       </li>
-      <?php if(isset($_SESSION['username'])): ?>
+      <?php if((isset($_SESSION['username']) || isCookieValid($db))): ?>
       <li class="nav-item">
         <a class="nav-link" href="#About">My Profile</a>
       </li>
